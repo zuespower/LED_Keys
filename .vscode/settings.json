@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "*.tcc": "cpp",
+        "ctime": "cpp",
+        "iomanip": "cpp",
+        "array": "cpp",
+        "string": "cpp",
+        "system_error": "cpp"
+    }
+}
