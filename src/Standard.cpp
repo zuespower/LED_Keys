@@ -18,6 +18,7 @@ Standard::Standard() {
 
 Standard::~Standard() {};
 
+
 uint8_t Standard::RunWaitStatus(TM1638 module){
     uint64_t currentScopeTime = millis();
     uint8_t localKeys = 0;
