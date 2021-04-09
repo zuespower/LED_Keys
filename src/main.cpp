@@ -1,14 +1,14 @@
 #include <Includes.h>
 TM1638 module(0, 4, 5);
 Standard displayStatus;
-//void IRAM_ATTR handleButtonInterrupt() {         /* *********************************************** */
-//    portENTER_CRITICAL_ISR(&mux);                /* HeghvaD jaj            ____  _____ _     ____   */           
-//    numberOfButtonInterrupts++;                  /*  QaQ DaHjaj           /_   \/  __// \ /\/ ___\  */
-//    lastState = digitalRead(BUTTONPIN);          /*                        /   /|  \  | | ||| __    */
-//    debounceTimeout = xTaskGetTickCount();       /*                       /   /_|  /_ | \_/|\___ \  */
-//    portEXIT_CRITICAL_ISR(&mux);                 /*         Powered by... \____/\____\\____/\____/  */
-//}                                                /*                             POWER SYSTEMS, LLC  */
-                                                   /* *********************************************** */
+//void IRAM_ATTR handleButtonInterrupt() {         /*************************************************/
+//    portENTER_CRITICAL_ISR(&mux);                /* HeghvaD jaj           ____  _____ _     ____  */           
+//    numberOfButtonInterrupts++;                  /* QaQ DaHjaj           /_   \/  __// \ /\/ ___\ */
+//    lastState = digitalRead(BUTTONPIN);          /*                       /   /|  \  | | ||| __   */
+//    debounceTimeout = xTaskGetTickCount();       /*                      /   /_|  /_ | \_/|\___ \ */
+//    portEXIT_CRITICAL_ISR(&mux);                 /*        Powered by... \____/\____\\____/\____/ */
+//}                                                /*                            POWER SYSTEMS, LLC */
+                                                   /*************************************************/
 void setup() {
     //Comment line 8 before final implimentation.
     Serial.begin(115200);
