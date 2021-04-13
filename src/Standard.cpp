@@ -43,6 +43,7 @@ uint8_t Standard::RunWaitStatus(TM1638 module) {
         }
     } else {
         localKeys = module.getButtons();
+
     }
     DisplayVerifiedPasscode();
     return localKeys;
@@ -54,22 +55,32 @@ uint8_t Standard::VerifyCodes(TM1638 module, uint8_t keys){
         if (CheckPassCodeValues(keys)) {
             enteredCode =+ (0xFF << ledShiftPosition);
             ledShiftPosition--;
-            isInputIncoming = true;
-            masterTimerCheckValue = millis();
+            isEvalInputIncoming = true;
+            masterTimerCheckValue = masterTimer;
         } else {
             ClearPasscodeParameters();
         }
         if (keys == 129) isProgrammingMode = true;
-    } else if (isProgrammingMode) { //Reprogram
+    } else if (isProgrammingMode) { 
         module.setDisplayToString("Pro 1", 0b00100000);
         delay(1000);
-        if (keys==65) isProgrammingMode = false;
+        if (keys==65) {
+            isProgrammingMode = false;
+        }
+        SetSecurityCodes(keys);
     }
 
-    if ((masterTimer - masterTimerCheckValue > 5000) && isInputIncoming) {
-        ClearPasscodeParameters();
+    if ((masterTimer - masterTimerCheckValue > 7000) && isEvalInputIncoming && !isProgrammingMode) {
+        //ClearPasscodeParameters();
     }
     return enteredCode;
+}
+
+void Standard::SetSecurityCodes(uint8_t key){
+    if (passOne) codeOne = key;
+    // Serial.print(passOne);
+    // Serial.print(" - ");
+    // Serial.println(codeOne);
 }
 
 void Standard::ClearPasscodeParameters() {
@@ -77,13 +88,14 @@ void Standard::ClearPasscodeParameters() {
     startDisplaySegment = 0;
     isProgrammingMode = false;
     ledShiftPosition = 7;
-    isInputIncoming = false;
+    isEvalInputIncoming = false;
     passOne = false;
     passTwo = false;
     passThree = false;
 }
 
 void Standard::DisplayVerifiedPasscode() {
+    uint64_t masterTimer = millis();
     if (passOne && !passTwo && !passThree && standbyDisplayPosition!=8) {
              values[7] = 1;
     } else if (passOne && !passTwo && !passThree && standbyDisplayPosition==8) {
@@ -115,6 +127,11 @@ void Standard::DisplayVerifiedPasscode() {
             break;
         }
     }
+    
+    if (passcodeGroupOne){
+        Serial.println("allpass 1");
+    }
+
 }
 
 bool Standard::CheckPassCodeValues(uint8_t keyCode) {
@@ -128,7 +145,8 @@ bool Standard::CheckPassCodeValues(uint8_t keyCode) {
         return true;
     } else if (keyCode == codeThree && (passOne == true && passTwo == true && passThree == false)) {
         passThree = true;
-        startDisplaySegment = 3;
+        startDisplaySegment = 0;
+        passcodeGroupOne = true;
         return true;
     }
     return false;

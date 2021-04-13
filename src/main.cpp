@@ -10,7 +10,7 @@ Standard displayStatus;
 //}                                                /*                            POWER SYSTEMS, LLC */
                                                    /*************************************************/
 void setup() {
-    //Comment line 8 before final implimentation.
+    //Comment line 8 before final implimentation, then verify there are no more Serial calls.
     Serial.begin(115200);
     module.setupDisplay(1,3);
     module.setDisplayToString("  ZEUS  ", 0x00);

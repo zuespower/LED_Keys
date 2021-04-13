@@ -17,20 +17,25 @@ class Standard
 
         uint8_t codeOne, codeTwo, codeThree;    
         uint64_t masterTimerCheckValue;
-        bool isInputIncoming;
+        bool isEvalInputIncoming;
 
         byte RunWaitStatus(TM1638 module);
         byte ReverseTheStupid(byte inputVal);
         void ClearPasscodeParameters();
         uint8_t VerifyCodes(TM1638 module, uint8_t keys);
         
+        
+        bool passOne, passTwo, passThree, isProgrammingMode;
+        
     private:
         uint64_t previousTime;
         uint8_t standbyDisplayPosition, currentDisplaySegment, startDisplaySegment;
         uint8_t ledShiftPosition = 7, enteredCode = 0;
         uint8_t segmentId[4], values[8];
-        bool passOne, passTwo, passThree, isProgrammingMode;
-
+        bool passcodeGroupOne, passcodeGroupTwo, passcodeGroupThree;
+        //bool passOne, passTwo, passThree, isProgrammingMode;
+        
         bool CheckPassCodeValues(uint8_t keyCode);
         void DisplayVerifiedPasscode();
+        void SetSecurityCodes(uint8_t button);
 };
