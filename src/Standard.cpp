@@ -6,6 +6,7 @@
 #include "Standard.h"
 #include <TM1638.h>
 
+
 Standard::Standard() {
     standbyDisplayPosition = 0;
     currentDisplaySegment = 0;
